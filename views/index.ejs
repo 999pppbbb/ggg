@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <% include ./head %>
+	</head>
+    <body>
+        
+        <div>
+            <a href="/">index</a><br>
+            <a href="/works">works</a><br>
+            <a href="/work/form">new work</a><br>
+        </div>
+        <div>
+            <% if(typeof content == "undefined") {  }else{ %>
+             <%- include(content) %>
+             <% } %>           
+            
+        </div>
+        <div>
+            <% if(typeof works == "undefined") {  }else{ %>
+            <% include ./work } %>
+             <% } %>
+        </div>
+    </body>    
+</html> 

@@ -1,0 +1,124 @@
+    id:  <%= result._id %>
+<br>created at: <%= result.created_at %>
+<br>updated at: <%= result.updated_at %>
+<br>writer: <%= result.writer %>
+<br>title: <%= result.title %>
+<br>content: <%= result.content %>
+<% if(result.file) { %> 
+  <br>file: <%= result.file.filename %> <br>
+<input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
+           
+        <canvas id="myCanvas"></canvas>
+
+ <% } %> 
+
+
+
+<br>
+<form method="post" action="/work/edit" >
+    <input type="hidden" name="id" value="<%= result._id %>">
+    <input type="submit" value="edit" />
+</form>
+<br>
+<form method="post" action="/work/delete" >
+   <% if(result.file) { %>  <input type="hidden" name="pre_addfile" value="<%= result.file.filename %>" />   <% } %> 
+    <input type="hidden" name="id" value="<%= result._id %>">
+    <input type="submit" value="delete" />
+</form>
+
+
+<script>
+  
+    
+var canvas = document.getElementsByTagName('canvas')[0];
+
+ var img = new Image;
+ img.src = "/uploads/<%= result.file.filename %>"
+
+img.onload = function() {
+
+  canvas.width = this.width;
+  canvas.height = this.height;
+    
+}
+
+window.onload = function(){		
+    
+    var ctx = canvas.getContext('2d');
+    trackTransforms(ctx);
+		  
+    function redraw(){
+
+      ctx.save();
+      ctx.setTransform(1,0,0,1,0,0);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.restore();
+      ctx.drawImage(img,0,0);
+
+    }
+    redraw();
+
+      var lastX=canvas.width/2, lastY=canvas.height/2;
+
+      var dragStart,dragged;
+
+      canvas.addEventListener('mousedown',function(evt){
+          document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+          lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+          lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+          dragStart = ctx.transformedPoint(lastX,lastY);
+          dragged = false;
+      },false);
+
+      canvas.addEventListener('mousemove',function(evt){
+          lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+          lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+          dragged = true;
+          if (dragStart){
+            var pt = ctx.transformedPoint(lastX,lastY);
+            ctx.translate(pt.x-dragStart.x,pt.y-dragStart.y);
+            redraw();
+                }
+      },false);
+
+      canvas.addEventListener('mouseup',function(evt){
+          dragStart = null;
+          if (!dragged) zoom(evt.shiftKey ? -1: 1 );
+      },false);
+
+      var scaleFactor = 1.10;
+
+      var zoom = function(clicks){
+          var pt = ctx.transformedPoint(lastX,lastY);
+          ctx.translate(pt.x,pt.y);
+          var factor = Math.pow(scaleFactor,clicks);
+          ctx.scale(factor,factor);
+          ctx.translate(-pt.x,-pt.y);
+          redraw();
+      }
+      
+            
+      var handleScroll = function(evt){
+          var delta = evt.wheelDelta ? evt.wheelDelta/300 : evt.detail ? -evt.detail : 0;
+          if (delta) zoom(delta);
+          return evt.preventDefault() && false;
+      };
+    
+      canvas.addEventListener('mousewheel',handleScroll,false);
+	};
+	
+	function trackTransforms(ctx){
+      var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+      var xform = svg.createSVGMatrix();
+      ctx.getTransform = function(){ return xform; };
+
+      var pt  = svg.createSVGPoint();
+      ctx.transformedPoint = function(x,y){
+          pt.x=x; pt.y=y;
+          return pt.matrixTransform(xform.inverse());
+      }
+	}
+    
+  
+    
+</script>
