@@ -1,37 +1,28 @@
 <input type="button" class="btn_list" value="<" onclick="goBack()">
 
-
 <ul>
-    
-<% for(x in worksList){   %> 
-    
+  <% for(x in worksList){   %>
     <li>
-
-    <% if(worksList[x].includes(".")){    
-        
-        var lastDot = worksList[x].lastIndexOf('.'); 
-	   var fileExtension = worksList[x].substring(lastDot+1, worksList[x].length);  
-            
-        %> 
-   
-        <a href="<%= url %><%= path %><%= worksList[x].slice(0,-4)%>?view=<%= fileExtension %>"><%= worksList[x] %></a>
-
-    <% }else{ %>
-    
-        <a href="<%= url %><%= path %><%= worksList[x]%>"><%= worksList[x] %></a>
-    <% }  
-    }  %>
-
+      <% if(worksList[x].includes(".")){
+          var lastDot = worksList[x].lastIndexOf('.');
+          var fileExtension = worksList[x].substring(lastDot+1, worksList[x].length);
+        %>
+          <a href="<%= url %><%= path %><%= worksList[x].slice(0,-4)%>?view=<%= fileExtension %>"><%= worksList[x] %></a>
+      <% }else{ %>
+          <a href="<%= url %><%= path %><%= worksList[x]%>"><%= worksList[x] %></a>
+      <% }
+      }  %>
 </ul>
 
-
-  <%= worksFilePath %> 
+ <% if(typeof worksFilePath === 'undefined') { }else{ %>
+  <%= worksFilePath %>
    <canvas id="myCanvas"></canvas>
+
+   <% } %>
 
 
 <script>
-    
-        
+
 var canvas = document.getElementsByTagName('canvas')[0];
 
  var img = new Image;
@@ -41,14 +32,14 @@ img.onload = function() {
 
   canvas.width = this.width;
   canvas.height = this.height;
-    
+
 }
 
-window.onload = function(){		
-    
+window.onload = function(){
+
     var ctx = canvas.getContext('2d');
     trackTransforms(ctx);
-		  
+
     function redraw(){
 
       ctx.save();
@@ -104,10 +95,10 @@ window.onload = function(){
           if (delta) zoom(delta);
           return evt.preventDefault() && false;
       };
-    
+
       canvas.addEventListener('mousewheel',handleScroll,false);
 	};
-	
+
 	function trackTransforms(ctx){
       var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
       var xform = svg.createSVGMatrix();
@@ -124,6 +115,5 @@ window.onload = function(){
     function goBack() {
         window.history.back();
     }
-    
-</script>
 
+</script>

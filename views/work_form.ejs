@@ -1,7 +1,26 @@
-<form method="post" action="/work/add" enctype="multipart/form-data">
-    <input type="text" name="writer" placeholder="writer">
-    <input type="text" name="title" placeholder="title">
-    <textarea id="content" name="content" rows="10" cols="80"></textarea>
-    <input type="file" name="addfile" /> 
-    <input type="submit" value="add" name="" />
-</form>
+<% if (typeof editWork !=='undefined'){ %>
+
+  <form method="post" action="/work/update" enctype="multipart/form-data">
+      <input type="hidden" name="id" value=<%= editWork._id %>>
+      <input type="text" name="writer" value=<%= editWork.writer %>>
+      <input type="text" name="title" value=<%= editWork.title %>>
+      <textarea id="content" name="content" rows="10" cols="80"><%= editWork.content %></textarea>
+      <input type="file" name="addfile" /><br>
+      <% if(editWork.file) { %>
+       <input type="text" name="pre_addfile" value="<%= editWork.file.filename %>" />
+      <br>file: <img src="/uploads/<%= editWork.file.filename %>" width="500">
+       <% } %>
+      <input type="submit" value="update" name="" />
+  </form>
+  <% }else{ %>
+
+    <form method="post" action="/work/add" enctype="multipart/form-data">
+        <p><input type="text" name="writer" placeholder="writer"></p>
+        <p><input type="text" name="title" placeholder="title"></p>
+        <p><textarea id="content" name="content" rows="10" cols="80"></textarea></p>
+        <p><input type="file" name="addfile" /> </p>
+        <p><input type="submit" value="add" name="" /></p>
+    </form>
+
+
+<% } %>

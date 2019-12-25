@@ -16,16 +16,9 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage })
 
 
-
-
 module.exports = function router(app){
 
-
     app.get(/works/, function (req, res){
-
-      console.log('view',  req._parsedOriginalUrl.query)
-
-    console.log('req.url', req.originalUrl)
 
     functions.getWorksFolder(fs, '.'+req.url, function(err, results){
 
@@ -35,14 +28,11 @@ module.exports = function router(app){
             res.render('index', { content: 'works', worksList: results , worksFilePath: filePath, url : req.app.get('URL'), path: req.url  } )
         }
 
-        console.log('results', results)
-
         res.render('index', { content: 'works', worksList: results, url : req.app.get('URL'), path: req.url })
 
         })
 
     });
-
 
     app.get('/', function (req, res){
         functions.getWorkList(req).then((works) =>
@@ -52,10 +42,9 @@ module.exports = function router(app){
     app.get('/work/show/:id', (req, res)=> {
         var database = req.app.get('database');
         database.WorkModel.load(req.params.id, function(err, result) {
-            console.log(result.file)
-        functions.getWorkList(req).then((works) =>
-        res.render('index', { content: 'work_show', result: result , works: works  }))
-      });
+          functions.getWorkList(req).then((works) =>
+          res.render('index', { content: 'work_show', result: result , works: works  }))
+        });
     });
 
     app.get('/work/form', (req, res)=> {
@@ -65,10 +54,17 @@ module.exports = function router(app){
 
    app.post('/work/edit', (req, res)=> {
        var database = req.app.get('database');
-        database.WorkModel.load(req.body.id, function(err, result) {
-         res.render('index', { content: 'work_edit', result: result })
+        database.WorkModel.load(req.body.edit_id, function(err, editWork) {
+         res.render('index', { content: 'work_form', editWork: editWork })
         });
     });
+
+    // app.post('/work/edit', (req, res)=> {
+    //     var database = req.app.get('database');
+    //      database.WorkModel.load(req.body.id, function(err, result) {
+    //       res.render('index', { content: 'work_edit', result: result })
+    //      });
+    //  });
 
     app.post('/work/add', upload.single('addfile'), (req, res)=> {
         const database = req.app.get('database');
