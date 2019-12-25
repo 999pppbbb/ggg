@@ -1,20 +1,23 @@
 <% if (typeof editWork !=='undefined'){ %>
 
   <form method="post" action="/work/update" enctype="multipart/form-data">
-      <input type="hidden" name="id" value=<%= editWork._id %>>
-      <input type="text" name="writer" value=<%= editWork.writer %>>
-      <input type="text" name="title" value=<%= editWork.title %>>
-      <textarea id="content" name="content" rows="10" cols="80"><%= editWork.content %></textarea>
-      <input type="file" name="addfile" /><br>
+      <p><input type="hidden" name="id" value=<%= editWork._id %>></p>
+      <p><input type="text" name="writer" value=<%= editWork.writer %>></p>
+      <p><input type="text" name="title" value=<%= editWork.title %>></p>
+      <p><textarea id="content" name="content" rows="10" cols="80"><%= editWork.content %></textarea></p>
+      <p><input type="text" name="path" value=<%= editWork.path %>></p>
+      <p><input type="file" name="addfile" /><br>
       <% if(editWork.file) { %>
-       <input type="text" name="pre_addfile" value="<%= editWork.file.filename %>" />
-      <br>file: <img src="/uploads/<%= editWork.file.filename %>" width="500">
+       <p><input type="text" name="pre_addfile" value="<%= editWork.file.filename %>" /></p>
+       <p><input type="text" name="pre_filepath" value="<%= editWork.path %>/<%= editWork.file.filename %>" /></p>
+       <p>file: <img src="/works/<%= editWork.path %>/<%= editWork.file.filename %>" width="500"></p>
        <% } %>
-      <input type="submit" value="update" name="" />
+      <p><input type="submit" value="update" name="" /></p>
   </form>
   <% }else{ %>
 
     <form method="post" action="/work/add" enctype="multipart/form-data">
+        <p><input type="text" name="path" placeholder="path"></p>
         <p><input type="text" name="writer" placeholder="writer"></p>
         <p><input type="text" name="title" placeholder="title"></p>
         <p><textarea id="content" name="content" rows="10" cols="80"></textarea></p>

@@ -3,7 +3,6 @@ var app = express();
 var fs = require('fs');
 var router = express.Router();
 
-app.use('/uploads', express.static('uploads'));
 app.use('/works', express.static('works'));
 app.use('/js', express.static('js'));
 app.use(express.json());

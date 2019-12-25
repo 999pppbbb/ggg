@@ -1,10 +1,8 @@
-<%  
+<%
     for(var i=0; i < works.length; i++){
 %>
 
-<a href="/work/show/<%=works[i]._doc._id %>"><%=works[i]._doc.title %></a><br>
-
-<p id="demo"></p>
-
-<%  } %>	
-
+<p>
+  <a href="/work/show/<%=works[i]._doc._id %>"><%=works[i]._doc.title %></a>
+</p>
+<%  } %>

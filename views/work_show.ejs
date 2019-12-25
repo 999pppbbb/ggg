@@ -4,11 +4,13 @@
 <br>writer: <%= result.writer %>
 <br>title: <%= result.title %>
 <br>content: <%= result.content %>
+<br>path: <%= result.path %>
 
   <br>file: <% if(typeof result.file === 'undefined') { %>
     there is no file
     <% }else{ %>
       <%= result.file.filename %> <br>
+      
 <input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
 
         <canvas id="myCanvas"></canvas>
@@ -22,7 +24,8 @@
 </form>
 <br>
 <form method="post" action="/work/delete" >
-   <% if(result.file) { %>  <input type="hidden" name="pre_addfile" value="<%= result.file.filename %>" />   <% } %>
+   <% if(result.file) { %>
+    <input type="hidden" name="pre_filepath" value="<%= result.filepath %>" />   <% } %>
     <input type="hidden" name="id" value="<%= result._id %>">
     <input type="submit" value="delete" />
 </form>
@@ -35,7 +38,7 @@
 var canvas = document.getElementsByTagName('canvas')[0];
 
  var img = new Image;
- img.src = "/uploads/<%= result.file.filename %>"
+ img.src = "<%= result.filepath %>"
 
 
 img.onload = function() {
