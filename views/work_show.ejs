@@ -4,13 +4,16 @@
 <br>writer: <%= result.writer %>
 <br>title: <%= result.title %>
 <br>content: <%= result.content %>
-<% if(result.file) { %> 
-  <br>file: <%= result.file.filename %> <br>
+
+  <br>file: <% if(typeof result.file === 'undefined') { %>
+    there is no file
+    <% }else{ %>
+      <%= result.file.filename %> <br>
 <input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
-           
+
         <canvas id="myCanvas"></canvas>
 
- <% } %> 
+ <% } %>
 
 
 
@@ -21,32 +24,34 @@
 </form>
 <br>
 <form method="post" action="/work/delete" >
-   <% if(result.file) { %>  <input type="hidden" name="pre_addfile" value="<%= result.file.filename %>" />   <% } %> 
+   <% if(result.file) { %>  <input type="hidden" name="pre_addfile" value="<%= result.file.filename %>" />   <% } %>
     <input type="hidden" name="id" value="<%= result._id %>">
     <input type="submit" value="delete" />
 </form>
 
 
 <script>
-  
-    
+
+ <% if(typeof result.file === 'undefined') { }else{ %>
+
 var canvas = document.getElementsByTagName('canvas')[0];
 
  var img = new Image;
  img.src = "/uploads/<%= result.file.filename %>"
 
+
 img.onload = function() {
 
   canvas.width = this.width;
   canvas.height = this.height;
-    
+
 }
 
-window.onload = function(){		
-    
+window.onload = function(){
+
     var ctx = canvas.getContext('2d');
     trackTransforms(ctx);
-		  
+
     function redraw(){
 
       ctx.save();
@@ -96,17 +101,17 @@ window.onload = function(){
           ctx.translate(-pt.x,-pt.y);
           redraw();
       }
-      
-            
+
+
       var handleScroll = function(evt){
           var delta = evt.wheelDelta ? evt.wheelDelta/300 : evt.detail ? -evt.detail : 0;
           if (delta) zoom(delta);
           return evt.preventDefault() && false;
       };
-    
+
       canvas.addEventListener('mousewheel',handleScroll,false);
 	};
-	
+
 	function trackTransforms(ctx){
       var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
       var xform = svg.createSVGMatrix();
@@ -118,7 +123,6 @@ window.onload = function(){
           return pt.matrixTransform(xform.inverse());
       }
 	}
-    
-  
-    
+  <% } %>
+
 </script>

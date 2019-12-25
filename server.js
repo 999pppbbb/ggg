@@ -1,4 +1,4 @@
-var express = require('express'); 
+var express = require('express');
 var app = express();
 var fs = require('fs');
 var router = express.Router();
@@ -18,8 +18,8 @@ app.set('view engine', 'ejs');
 app.set('URL', 'http://localhost:3000');
 
 
-app.listen(3000, (err)=>{ 
-    if(err)throw err; 
-    console.log('listening on port 3000');     
-    database.init(app, routes);   
-}); 
+app.listen(3000, (err)=>{
+    if(err)throw err;
+    console.log('listening on port 3000');
+    database.init(app, routes);
+});
