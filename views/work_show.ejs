@@ -1,16 +1,17 @@
-    id:  <%= result._id %>
-<br>created at: <%= result.created_at %>
-<br>updated at: <%= result.updated_at %>
-<br>writer: <%= result.writer %>
-<br>title: <%= result.title %>
-<br>content: <%= result.content %>
-<br>path: <%= result.path %>
+<p>id:<%= result._id %></p>
+<p>created at: <%= result.created_at %></p>
+<p>updated at: <%= result.updated_at %></p>
+<p>writer: <%= result.writer %></p>
+<p>title: <%= result.title %></p>
+<p>content: <%= result.content %></p>
+<p>path: <%= result.path %></p>
 
-  <br>file: <% if(typeof result.file === 'undefined') { %>
+  <p>file: <% if(typeof result.file === 'undefined') { %>
     there is no file
     <% }else{ %>
-      <%= result.file.filename %> <br>
-      
+      <%= result.filepath %>
+  </p>
+
 <input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
 
         <canvas id="myCanvas"></canvas>
