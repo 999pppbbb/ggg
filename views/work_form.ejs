@@ -5,7 +5,7 @@
         <p><input type="text" name="path" placeholder="path"></p>
         <p><input type="text" name="writer" placeholder="writer"></p>
         <p><input type="text" name="title" placeholder="title"></p>
-        <p><textarea id="content" name="content" rows="10" cols="80"></textarea></p>
+        <p><textarea name="content" rows="10" cols="80"></textarea></p>
         <p><input type="file" name="addfile" /> </p>
         <p><input type="submit" value="add" name="" /></p>
     </form>
@@ -16,7 +16,7 @@
         <p><input type="hidden" name="id" value=<%= editWork._id %>></p>
         <p>writer: <input type="text" name="writer" value=<%= editWork.writer %>></p>
         <p>title: <input type="text" name="title" value=<%= editWork.title %>></p>
-        <p>content: <textarea id="content" name="content" rows="10" cols="80"><%= editWork.content %></textarea></p>
+        <p>content: <textarea name="content" rows="10" cols="80"><%= editWork.content %></textarea></p>
         <p>path: <input type="text" name="path" value=<%= editWork.path %>></p>
         <p><input type="file" name="addfile" /><br>
         <% if(editWork.file) { %>

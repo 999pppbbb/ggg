@@ -1,0 +1,100 @@
+* { box-sizing: border-box; }
+
+body { margin: 0; padding: 0;  text-align:center; }
+
+canvas { width:50%; display:block; margin:1em auto; text-align:center; background:#fff; border:1px solid #ccc; }
+svg { margin-left:auto; margin-right:auto; display:block;}
+
+table, th, tr, td { background-color: #fff; text-align: left; border-collapse: collapse;}
+th, td { border-bottom: 1px solid black;  }
+th {padding-right: 2em; }
+
+ul, #myUL { list-style-type: none; margin-bottom: 1em; }
+
+a { text-decoration: none; }
+a:link { color: black; }
+a:visited { color: black; }
+a:hover { background-color: black; color: #fff }
+
+.header {  
+    padding: 10px;
+    background-color: black;
+    border: 1px solid black;
+}
+
+.header a { color: #fff; }
+
+.container {
+
+    background:#f0f0f0; 
+    display: flex;
+
+}
+
+.nav {
+    width: auto;
+    height: 100%;
+    left: 0px;
+    padding: 1em 10em 0 0;  /* top right bottom left */ 
+    float: left;
+    text-align:left; 
+    position: fixed;
+    display: block;
+    background-color:#fff;
+    border: 1px solid black;
+    display: flex;
+    z-index: 10;
+}
+
+#content {
+    width: 100%;
+    height: 100%;
+    padding: 2em 0 2em 20em;  /* top right bottom left */ 
+    position: relative;
+    background-color: #fff; 
+    border: 1px solid black;
+    float: right;
+    text-align:left; 
+    z-index: 9;
+}
+
+#view {  float:right; padding: 2em; border: 1px solid black;  background-color: #fff; }
+
+.caret {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
+}
+
+.caret::before {
+    content: "\25B6";
+    color: black;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.caret-down::before {
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari */'
+    transform: rotate(90deg);  
+}
+
+.nested { display: none; }
+.nested .child { margin-right: -5em; line-height: 1.5em; }
+.active { display: block; }
+
+.btn-link {  
+    float: left;
+    border: 1px solid black;    
+    outline: none;
+    background-color: #fff;    
+    cursor: pointer;    
+    color: black;    
+    padding: 5px;
+    margin: 2em 0.7em 2em 0;  /* top right bottom left */   
+    text-decoration: none;   
+    font-family: inherit;    
+    font-size: inherit;
+}

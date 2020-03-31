@@ -3,36 +3,28 @@
 	<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <link rel="stylesheet" href="/public/view.css">
-	</head>
+    <link rel="stylesheet" href="/public/style.css">
+  </head>  
     <body>
+
       <div class="header">
-          <% if(typeof urlpath === "undefined") {  }else{ %>
-            <%
-                for(var i=0; i < urlpath.urls.length; i++){
-                  var ur = urlpath.urls[i];
-            %>
-             &nbsp;&nbsp;&nbsp;&nbsp;    <a href="<%=ur.url %>"><%=ur.name %></a>
-          
-          <%  } } %>
+        <%- include('header') %>
       </div>
 
-      <div class="tab">
-        <% if(typeof worksList === "undefined") {  }else{ %>
-        <%- worksList %>
-        <% } %>
-      </div>
+      <div class = "container">
 
-        <div id="content">            
-            <% if(typeof content === "undefined") {  }else{ %>
-             <%- include(content) %>
-             <% } %>
+        <div class="nav">
+          <%- include('nav') %>
+        </div>             
 
-             <div id="workData"></div>
-             
-        </div>
-             
-   
+        <div id="content">    
+          <% if(typeof content === "undefined") {  }else{ %>
+            <%- include(content) %>
+          <% } %>
+        </div>  
+
+      </div>     
+
     </body>
 </html>
 
@@ -46,7 +38,7 @@
     xhttp.onreadystatechange = function() {
 
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("workData").innerHTML = this.responseText;        
+        document.getElementById("content").innerHTML = this.responseText;        
       }
       
     };

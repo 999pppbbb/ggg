@@ -25,11 +25,6 @@ var urlpath = JSON.parse(data);
 
 module.exports = function router(app) {
 
-  app.get('/work/form', (req, res)=> {
-    functions.getWorkList(req).then((works) =>
-      res.render('index', { content: 'work_form' , works: works, urlpath:urlpath}))
-    });
-
   app.get('/work/list', (req, res)=> {
     functions.getWorkList(req).then((works) =>
       res.render('index', { content: 'work_list' , works: works, urlpath:urlpath}))

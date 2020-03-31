@@ -1,6 +1,6 @@
 module.exports = {
 
-    processAddWork: (req, res) => {
+    addWork: (req, res) => {
 
         var database = req.app.get('database');
 
