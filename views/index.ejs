@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html>
 	<head>
-        <% include ./head %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link rel="stylesheet" href="/public/view.css">
 	</head>
     <body>
-        <div>
-            <a href="/">gagegeomi</a><br>
-            <a href="/work/form">new work</a><br>
-        </div>
-        <div>
+      <div class="header">
+          <% if(typeof urlpath === "undefined") {  }else{ %>
+            <%
+                for(var i=0; i < urlpath.urls.length; i++){
+                  var ur = urlpath.urls[i];
+            %>
+             &nbsp;&nbsp;&nbsp;&nbsp;    <a href="<%=ur.url %>"><%=ur.name %></a>
+          
+          <%  } } %>
+      </div>
+
+      <div class="tab">
+        <% if(typeof worksList === "undefined") {  }else{ %>
+        <%- worksList %>
+        <% } %>
+      </div>
+
+        <div id="content">            
             <% if(typeof content === "undefined") {  }else{ %>
              <%- include(content) %>
              <% } %>
+
+             <div id="workData"></div>
+             
         </div>
-        <div>
-            <% if(typeof works === "undefined") {  }else{ %>
-            	<% include ./work } %>
-             <% } %>
-        </div>
+             
+   
     </body>
 </html>
+
+
+<script>
+
+  function getWorkView(id) {
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById("workData").innerHTML = this.responseText;        
+      }
+      
+    };
+
+    xhttp.open("GET", "/work/view/" + id , true);
+    xhttp.send();
+
+  }
+
+  var toggler = document.getElementsByClassName("caret");
+  var i;
+  
+  for (i = 0; i < toggler.length; i++) {
+
+    toggler[i].addEventListener("click", function() {
+      this.parentElement.querySelector(".nested").classList.toggle("active");
+      this.classList.toggle("caret-down");
+    });
+    
+  }
+
+
+</script>

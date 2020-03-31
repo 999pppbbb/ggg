@@ -16,42 +16,63 @@ function connect(app) {
 }
 
 function createSchema(app) {
-  database.WorkSchema = mongoose.Schema({
-    writer:'string', title:'string', content:'string',
+
+  database.WorkSchema = mongoose.Schema ({
+
+    writer:'string', 
+    title:'string', 
+    content:'string',
     created_at:{type: Date, 'default': Date.now()},
     updated_at:{type: Date, 'default': Date.now()},
     path:'string', file:'object'
+
   });
 
   database.WorkSchema.methods = {
+
     saveWork: function(callback) {
-      var self = this;
+
+      var self = this;      
+      
       this.validate(function(err) {
         if (err) return callback(err)
         self.save(callback)
+        console.log('>>>>>> 작업추가 SELF._DOC >>>>',self._doc);
+
       })
     }
+
   };
 
   database.WorkSchema.statics = {
+
     list: function(callback) {
       this.find().sort({_id: -1}).exec(callback)
-      },
+    },
+
+    workList: function(callback) {
+      this.find().sort({ path: 1}).exec(callback)
+    },
 
     load: function(id, callback) {
       this.findOne({_id: id}).exec(callback)
-      },
+    },
 
     updateWork: function(id, workmodel, callback) {
       workmodel.updated_at = Date.now();
       this.findByIdAndUpdate(id, workmodel, callback)
-      },
+      console.log('작업수정>>> workmodel : ',workmodel);
+      console.log('updateWork>>> this : ',this);
+    },
 
     deleteWork: function(id, callback){
       this.findByIdAndRemove(id, callback)
-      }
-    };
-    database.WorkModel = mongoose.model('Works', database.WorkSchema);
-    app.set('database', database);
+    }
+  };
+
+  database.WorkModel = mongoose.model('Works', database.WorkSchema);
+  app.set('database', database);
+
 }
+
 module.exports = database;

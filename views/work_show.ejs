@@ -1,12 +1,12 @@
-<p>id:<%= result._id %></p>
-<p>created at: <%= result.created_at %></p>
-<p>updated at: <%= result.updated_at %></p>
-<p>writer: <%= result.writer %></p>
-<p>title: <%= result.title %></p>
-<p>content: <%= result.content %></p>
-<p>path: <%= result.path %></p>
+<p>id : &nbsp;&nbsp;<%= result._id %></p>
+<p>created at : &nbsp;&nbsp; <%= result.created_at %></p>
+<p>updated at : &nbsp;&nbsp; <%= result.updated_at %></p>
+<p>write : &nbsp;&nbsp; <%= result.writer %></p>
+<p>title : &nbsp;&nbsp;<%= result.title %></p>
+<p>content : &nbsp;&nbsp;<%= result.content %></p>
+<p>path : &nbsp;&nbsp;<%= result.path %></p>
 
-  <p>file: <% if(typeof result.file === 'undefined') { %>
+  <p>file: <% if(!result.file || typeof result.file === 'undefined') { %>
     there is no file
     <% }else{ %>
       <%= result.filepath %>
@@ -14,7 +14,10 @@
 
 <input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
 
-        <canvas id="myCanvas"></canvas>
+<% if(typeof result.filepath === 'undefined') { }else{ %>
+  result.filepath::: <%= result.filepath %>
+   <canvas id="canvas"></canvas>
+   <% } %>
 
  <% } %>
 
@@ -32,43 +35,48 @@
 </form>
 
 
-<script>
+<% if(typeof worksFilePath === 'undefined') { }else{ %>
+    worksFilePath::: <%= worksFilePath %>
+     <canvas id="canvas"></canvas>
+     <% } %>
+  
 
- <% if(typeof result.file === 'undefined') { }else{ %>
+  
+  <script>
 
-var canvas = document.getElementsByTagName('canvas')[0];
-
- var img = new Image;
- img.src = "<%= result.filepath %>"
-
-
-img.onload = function() {
-
-  canvas.width = this.width;
-  canvas.height = this.height;
-
-}
-
-window.onload = function(){
-
-    var ctx = canvas.getContext('2d');
-    trackTransforms(ctx);
-
-    function redraw(){
-
-      ctx.save();
-      ctx.setTransform(1,0,0,1,0,0);
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ctx.restore();
-      ctx.drawImage(img,0,0);
-
+  const canvas = document.getElementsByTagName('canvas')[0];
+  const ctx = canvas.getContext('2d');
+  trackTransforms(ctx); //마우스휠 움직일 수 있게 함
+  
+  const img = new Image;
+   img.src = " <% if(typeof result.filepath !== "undefined"){  %> <%= result.filepath %> <% } %> "
+   img.onload = function() {
+     canvas.width = this.width;
+     canvas.height = this.height;
     }
-    redraw();
-
+  
+  window.onload = function(){
+  
+      function redraw(){
+        ctx.save(); //Saves the state of the current context
+        ctx.setTransform(1,0,0,1,0,0); //Resets the current transform to the identity matrix. Then runs transform()
+        //setTransform(a,b,c,d,e,f)
+        //a-Horizontal scaling
+        //b-Horizontal skewing
+        //c-Vertical skewing
+        //d-Vertical scaling
+        //e-Horizontal moving
+        //f-Vertical moving
+        ctx.clearRect(0,0,canvas.width,canvas.height); //Clears the specified pixels within a given rectangle //캔버스크기만큼 화면지움
+        ctx.restore(); //Returns previously saved path state and attributes
+        ctx.drawImage(img,0,0); //Draws an image, canvas, or video onto the canvas
+      }
+      redraw();
+  
       var lastX=canvas.width/2, lastY=canvas.height/2;
-
+  
       var dragStart,dragged;
-
+  
       canvas.addEventListener('mousedown',function(evt){
           document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
           lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
@@ -76,7 +84,7 @@ window.onload = function(){
           dragStart = ctx.transformedPoint(lastX,lastY);
           dragged = false;
       },false);
-
+  
       canvas.addEventListener('mousemove',function(evt){
           lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
           lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
@@ -87,14 +95,14 @@ window.onload = function(){
             redraw();
                 }
       },false);
-
+  
       canvas.addEventListener('mouseup',function(evt){
           dragStart = null;
           if (!dragged) zoom(evt.shiftKey ? -1: 1 );
       },false);
-
+  
       var scaleFactor = 1.10;
-
+  
       var zoom = function(clicks){
           var pt = ctx.transformedPoint(lastX,lastY);
           ctx.translate(pt.x,pt.y);
@@ -103,28 +111,35 @@ window.onload = function(){
           ctx.translate(-pt.x,-pt.y);
           redraw();
       }
-
-
+  
+  
       var handleScroll = function(evt){
           var delta = evt.wheelDelta ? evt.wheelDelta/300 : evt.detail ? -evt.detail : 0;
           if (delta) zoom(delta);
           return evt.preventDefault() && false;
       };
-
-      canvas.addEventListener('mousewheel',handleScroll,false);
-	};
-
-	function trackTransforms(ctx){
-      var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
-      var xform = svg.createSVGMatrix();
-      ctx.getTransform = function(){ return xform; };
-
-      var pt  = svg.createSVGPoint();
-      ctx.transformedPoint = function(x,y){
-          pt.x=x; pt.y=y;
-          return pt.matrixTransform(xform.inverse());
+  
+        canvas.addEventListener('mousewheel',handleScroll,false);
+      };
+  
+      function trackTransforms(ctx){
+        var svg = document.createElementNS("http://www.w3.org/2000/svg",'svg');
+        var xform = svg.createSVGMatrix();
+        ctx.getTransform = function(){ return xform; };
+  
+        var pt  = svg.createSVGPoint();
+        ctx.transformedPoint = function(x,y){
+            pt.x=x; pt.y=y;
+            return pt.matrixTransform(xform.inverse());
+        }
       }
-	}
-  <% } %>
+  
+  
+      function goBack() {
+          window.history.back();
+      }
+  
+  </script>
+  
 
-</script>
+
