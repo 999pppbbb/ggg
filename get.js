@@ -52,6 +52,17 @@ module.exports = {
                 res.render('work_view', { result: result })          
         })
     },
+    workCanvas: (req, res)=> {
+    
+        var database = req.app.get('database');
+        
+        database.WorkModel.load(req.params.id, function(err, result) {
+    
+            if(result.file) result.filepath  = '/works/' + result.path + '/' + result.file.filename;
+                       
+                res.render('canvas', { result: result })          
+        })
+    },
     canvas: (req, res)=> {
         var database = req.app.get('database');
         

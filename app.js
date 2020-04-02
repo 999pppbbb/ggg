@@ -43,12 +43,14 @@ let upload = multer({ storage: storage })
 
 routes(app)
 
-
-
 app.set('views', __dirname + '/views')
 
 app.get('/', get.index)
+app.get('/test', function(req, res){
+  res.render('test');
+})
 app.get('/work/form', get.workForm)
+app.get('/work/canvas/:id', get.workCanvas)
 app.get('/work/view/:id', get.workView)
 app.get('/work/canvas/:id', get.canvas)
 
@@ -65,3 +67,11 @@ app.listen(3000, (err)=>{
     database.init(app)    
 
 });
+
+
+// let ejs = require('ejs');
+// let myFileLoader = function (filePath) {
+//   return 'myFileLoader: ' + fs.readFileSync(filePath);
+// };
+
+// ejs.fileLoader = myFileLoad;

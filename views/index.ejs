@@ -17,7 +17,9 @@
           <%- include('nav') %>
         </div>             
 
-        <div id="content">    
+        <div id="content"> 
+          <canvas></canvas>   
+          <div id="data"> </div>
           <% if(typeof content === "undefined") {  }else{ %>
             <%- include(content) %>
           <% } %>
@@ -38,15 +40,38 @@
     xhttp.onreadystatechange = function() {
 
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("content").innerHTML = this.responseText;        
+        document.getElementById("data").innerHTML = this.responseText;  
+        alert('111');
+        getWorkCanvas(id);
       }
       
-    };
+    };    
 
     xhttp.open("GET", "/work/view/" + id , true);
     xhttp.send();
 
   }
+
+    function getWorkCanvas(id) {
+      alert('222');
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open("get", "/work/canvas/" + id , true);
+
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4) {
+              if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                  var script = document.createElement("script");
+                  script.type = "text/javascript";
+                  script.text = xhr.responseText;
+                  document.body.appendChild(script);
+              }
+          }
+      };
+      xhr.send(null);
+    }
+  
 
   var toggler = document.getElementsByClassName("caret");
   var i;

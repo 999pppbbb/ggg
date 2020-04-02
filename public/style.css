@@ -58,7 +58,7 @@ a:hover { background-color: black; color: #fff }
     z-index: 9;
 }
 
-#view {  float:right; padding: 2em; border: 1px solid black;  background-color: #fff; }
+#view {  float:right; top:100px; padding: 2em; border: 1px solid black;  background-color: #fff; position:fixed; }
 
 .caret {
     cursor: pointer;
