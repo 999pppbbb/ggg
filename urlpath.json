@@ -1,8 +1,8 @@
 {
   "urls":[
   {"name":"works", "url":"/"},
-  {"name":"works folder", "url":"/works"},
-  {"name":"new work", "url":"/work/form"},
-  {"name":"works list", "url":"/work/list"}
+  {"name":"files", "url":"/files"},
+  {"name":"new", "url":"/work/form"},
+  {"name":"list", "url":"/work/list"}
   ]
 }

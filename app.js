@@ -1,19 +1,19 @@
-var express = require('express')
-var app = express()
-var database = require('./database.js')
+const express = require('express')
+const app = express()
+const database = require('./database.js')
 const fs = require('fs')
 const multer  = require('multer')
 const path = require("path")
 const functions = require('./functions')
-var routes = require('./routes.js')
+const routes = require('./routes.js')
+const get = require('./get.js')
+const post = require('./post.js')
 
-app.use('/works', express.static('./works'))
+app.use('/works', express.static(__dirname + '/works'))
 app.use('/public', express.static(__dirname + '/public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-var get = require('./get.js')
-var post = require('./post.js')
 
 let storage = multer.diskStorage({
 
@@ -46,27 +46,25 @@ routes(app)
 app.set('views', __dirname + '/views')
 
 app.get('/', get.index)
-app.get('/test', function(req, res){
-  res.render('test');
-})
-app.get('/work/form', get.workForm)
+app.all('/work/form', get.workForm )
 app.get('/work/canvas/:id', get.workCanvas)
 app.get('/work/view/:id', get.workView)
-app.get('/work/canvas/:id', get.canvas)
-
 app.post('/work/add', upload.single('addfile'), post.addWork)
+app.post('/work/update', upload.single('addfile'), post.updateWork)
+app.post('/work/delete', post.deleteWork)
 
-
+app.get(/files/, get.files)
 
 app.set('view engine', 'ejs')
 app.set('URL', 'http://localhost:3000')
 
 app.listen(3000, (err)=>{
       if(err)throw err
-    console.log(' \n ****************** SERVER START ON PORT 3000 ****************** \n')
+    console.log(' \n ************************ SERVER START ON PORT 3000 ************************ \n')
     database.init(app)    
 
 });
+
 
 
 // let ejs = require('ejs');
@@ -75,3 +73,10 @@ app.listen(3000, (err)=>{
 // };
 
 // ejs.fileLoader = myFileLoad;
+
+// app.use('/',function(req,res,next){
+//   console.log('/ 주소의 요청일 때 실행된다.');
+//   next();
+// });
+
+//app.get('/test', function(req, res){  res.render('test');})

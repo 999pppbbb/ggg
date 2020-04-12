@@ -1,4 +1,6 @@
-var functions = {
+const fs = require('fs')
+
+module.exports = {
      getWorkList: async function(req) {
         const database = req.app.get('database')
           return await new Promise((resolve, reject) => {
@@ -75,19 +77,17 @@ var functions = {
        
         return [year,month,day,hours,minutes,seconds].join('-');
     },
-    getWorksFolder: function(fs, path, callback) {
+    getWorksFolder: function(path, callback) {
         fs.readdir(path, function(err, result){
             if (err) return callback(err)
             callback(null, result)
         })
     },
-    fileDelete: function(fs, filepath, callback){
+    fileDelete: function(filepath){
       fs.unlink(filepath, function(err) {
-        if (err) return callback(err)
-        console.log('기존파일은 삭제됨 >>>' + filepath);
-        callback(null, '기존파일 삭제완료')
+        if (err) throw err;
+        console.log('\n ****** PRE FILE DELETED ****** \n', filepath); 
       });  
     }    
-  }       
+  }      
 
-module.exports = functions;

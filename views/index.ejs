@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
     <link rel="stylesheet" href="/public/style.css">
+    <script src="/public/scripts.js"></script>
   </head>  
     <body>
 
@@ -18,7 +19,15 @@
         </div>             
 
         <div id="content"> 
-          <canvas></canvas>   
+          <div>
+            <input type="button" id="plus" value="+" onclick="zoomInOut(0.1)">
+            <input type="button" id="minus" value="-" onclick="zoomInOut(-0.1)">
+            <input type="button" value="fit" onclick="draw()">
+            <input type="button" value="expand" onclick="expand()">
+            <canvas>
+
+            </canvas>
+          </div>
           <div id="data"> </div>
           <% if(typeof content === "undefined") {  }else{ %>
             <%- include(content) %>
@@ -30,50 +39,8 @@
     </body>
 </html>
 
-
 <script>
-
-  function getWorkView(id) {
-
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function() {
-
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("data").innerHTML = this.responseText;  
-        alert('111');
-        getWorkCanvas(id);
-      }
-      
-    };    
-
-    xhttp.open("GET", "/work/view/" + id , true);
-    xhttp.send();
-
-  }
-
-    function getWorkCanvas(id) {
-      alert('222');
-
-      var xhr = new XMLHttpRequest();
-
-      xhr.open("get", "/work/canvas/" + id , true);
-
-      xhr.onreadystatechange = function () {
-          if (xhr.readyState == 4) {
-              if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
-                  var script = document.createElement("script");
-                  script.type = "text/javascript";
-                  script.text = xhr.responseText;
-                  document.body.appendChild(script);
-              }
-          }
-      };
-      xhr.send(null);
-    }
-  
-
-  var toggler = document.getElementsByClassName("caret");
+    var toggler = document.getElementsByClassName("caret");
   var i;
   
   for (i = 0; i < toggler.length; i++) {
@@ -84,6 +51,5 @@
     });
     
   }
-
 
 </script>

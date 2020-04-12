@@ -12,13 +12,6 @@
       <%= result.filepath %>
   </p>
 
-<input type="button" id="plus" value="+"><input type="button" id="minus" value="-">
-
-<% if(typeof result.filepath === 'undefined') { }else{ %>
-  result.filepath::: <%= result.filepath %>
-   <canvas id="canvas"></canvas>
-   <% } %>
-
  <% } %>
 
 <br>
@@ -33,14 +26,6 @@
     <input type="hidden" name="id" value="<%= result._id %>">
     <input type="submit" value="delete" />
 </form>
-
-
-<% if(typeof worksFilePath === 'undefined') { }else{ %>
-    worksFilePath::: <%= worksFilePath %>
-     <canvas id="canvas"></canvas>
-     <% } %>
-  
-
   
   <script>
 

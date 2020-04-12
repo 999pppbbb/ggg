@@ -19,25 +19,24 @@ function createSchema(app) {
 
   database.WorkSchema = mongoose.Schema ({
 
+    path:'string', 
     writer:'string', 
     title:'string', 
     content:'string',
     created_at:{type: Date, 'default': Date.now()},
     updated_at:{type: Date, 'default': Date.now()},
-    path:'string', file:'object'
+    file:'object'
 
   });
 
   database.WorkSchema.methods = {
 
     saveWork: function(callback) {
-
       var self = this;      
-      
       this.validate(function(err) {
         if (err) return callback(err)
         self.save(callback)
-        console.log('>>>>>> 작업추가 SELF._DOC >>>>',self._doc);
+        console.log('\n ****** ADD WORK SAVE ****** \n', self._doc);
 
       })
     }
@@ -59,10 +58,12 @@ function createSchema(app) {
     },
 
     updateWork: function(id, workmodel, callback) {
+      
       workmodel.updated_at = Date.now();
+
       this.findByIdAndUpdate(id, workmodel, callback)
-      console.log('작업수정>>> workmodel : ',workmodel);
-      console.log('updateWork>>> this : ',this);
+
+      console.log('\n ****** WORK UPDATED ****** \n', this);
     },
 
     deleteWork: function(id, callback){
@@ -72,6 +73,7 @@ function createSchema(app) {
 
   database.WorkModel = mongoose.model('Works', database.WorkSchema);
   app.set('database', database);
+  console.log(' \n DATABASE SETTING DONE \n ');
 
 }
 

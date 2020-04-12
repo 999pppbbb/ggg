@@ -1,5 +1,4 @@
   <div id= "view" >
- 
     <table>
     <tr><tr>
       <th>title</th>
@@ -35,8 +34,9 @@
     </tr>
   </table>
 
-  <form method="post" action="/work/edit" >
+  <form method="post" action="/work/form" >
     <input type="hidden" name="edit_id" value="<%= result._id %>">
+    <input type="hidden" id="filepath" value="<%= result.filepath %>">
     <input type="submit" value="edit" class="btn-link" />
   </form>
   
@@ -50,9 +50,3 @@
   
 
 </div> 
-
-<script>
-  function loadCanvas(){
-    alert('444')
-}
-</script>
