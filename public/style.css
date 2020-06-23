@@ -41,7 +41,7 @@ a:hover { background-color: black; color: #fff }
     width: auto;
     height: 100%;
     left: 0px;
-    padding: 1em 10em 0 0;  /* top right bottom left */ 
+    padding: 1em 5em 0 1em;  /* top right bottom left */ 
     float: left;
     text-align:left; 
     position: fixed;
@@ -99,6 +99,7 @@ ul, #myUL {
   }
   
   .box {
+    margin-left: -1.05em;
     cursor: pointer;
     -webkit-user-select: none; /* Safari 3.1+ */
     -moz-user-select: none; /* Firefox 2+ */
@@ -110,15 +111,17 @@ ul, #myUL {
     content: "\2610";
     color: black;
     display: inline-block;
-    margin-right: 6px;
+    margin-right: 3px;
   }
   
   .check-box::before {
+
     content: "\2611"; 
     color:#000;
   }
   
   .nested {
+    margin-left: -1.05em;
     display: none;
   }
   

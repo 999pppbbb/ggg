@@ -19,17 +19,6 @@ module.exports = {
 
     index: (req, res) => {          console.log(' \n ---------- GET INDEX PAGE ---------- \n ');
 
-    var getWorkList = async function (req) {
-
-        const database = req.app.get('database')
-            return await new Promise((resolve, reject) => {
-              database.WorkModel._list((err, result) => {
-                if (err) return reject(err);
-                resolve(result);
-              })
-            })
-    }
-
         function Node(data) {
             this.data = data;
             this.children = [];
@@ -63,19 +52,15 @@ module.exports = {
             }
 
             traverseBFS(cb) {
-                const queue = [this.root] 
-            
+                const queue = [this.root]             
                 if(cb)
                     while(queue.length) {
                         const node = queue.shift();
-
                         cb(node)      
-                        
                     }
             }
 
-        }
-    
+        }    
 
         getWorkList(req).then(function (worksList) {
             
@@ -118,22 +103,10 @@ module.exports = {
 
                     var workList = '<ul id="myUL"><li><span class="box">works</span><ul class="nested">';
 
-
-                    //기본
-
-                        //     <ul class="nested">  반복 시작
-                        //       <li>Water</li>
-                        //       <li>Coffee</li>
-                        //       <li><span class="box">Tea</span> 자식이 있으면 반복 시작으로 
-                        //         <ul class="nested">
-                        //           <li>Black Tea</li>
-                        //         </ul>
-                    //            </li>
-                        // </ul>
  
-                    function childGET(d){       
+                    function childGET(d) {       
 
-                    var str = '';
+                        var str = '';
                         
                         if(d.children.length > 0){    
                             
@@ -187,16 +160,32 @@ module.exports = {
 
                        nodes.forEach(dn => {    
 
-                        if(dn.data.parentId == '0'){       
-                            workList += '<li><span class="box"><a href="#" onclick="javascript:getWorkView(\''+ dn.data._id +'\');">' + dn.data.title + '</a></span>';
-                                                          
+                           let link = '<a href="#" onclick="javascript:getWorkView(\''+ dn.data._id +'\');">' + dn.data.title + '</a>';
+                           
+                        if(dn.data.parentId == '0'){   
+
+                            workList += '<li>';    
+
+                            if(dn.children.length == 0){
+                                                
+                                workList += link;
+                                workList += '</li>';                        
+            
+
+                            } else {
+
+                                workList += '<span class="box">';
+                                workList += link
+                                workList += '</span>';
+
+                            }
+                                                  
                             console.log('1 >',dn.data.title);
                             workList += childGET(dn);
 
                             
-                        }
-                           
-                        //workList += '</li></ul>';
+                        }                           
+     
          
                         });                         
                         
