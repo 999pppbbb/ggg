@@ -37,19 +37,42 @@ a:hover { background-color: black; color: #fff }
 
 }
 
-.nav {
-    width: auto;
-    height: 100%;
-    left: 0px;
-    padding: 1em 5em 0 1em;  /* top right bottom left */ 
-    float: left;
-    text-align:left; 
-    position: fixed;
-    display: block;
-    background-color:#fff;
-    border: 1px solid black;
-    display: flex;
-    z-index: 10;
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  text-align: left;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0;
+  overflow-x: hidden;
+  border: 1px solid black; 
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #000;
+  color: white;
+  padding: 10px 15px;
+  border: none;
 }
 
 .content-nav{
@@ -63,7 +86,7 @@ a:hover { background-color: black; color: #fff }
     padding: 2em 0 0 20em;  /* top right bottom left */ 
     position: relative;
     background-color: #fff; 
-    border: 1px solid black;
+    border-bottom: 1px solid black;
     float: right;
     text-align:left; 
     z-index: 9;
@@ -86,7 +109,6 @@ a:hover { background-color: black; color: #fff }
     font-size: inherit;
 }
 
-
 /* tree-menu  */
 
 ul, #myUL {
@@ -94,8 +116,9 @@ ul, #myUL {
   }
   
   #myUL {
+
     margin: 0;
-    padding: 0;
+    padding: 2em;
   }
   
   .box {

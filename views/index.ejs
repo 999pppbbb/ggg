@@ -6,33 +6,28 @@
     <link rel="stylesheet" href="/public/style.css">
     <script src="/public/scripts.js"></script>
   </head>  
+  
     <body>
 
       <div class="head">
+        <button class="openbtn" onclick="openNav()">☰</button>  
         <%- include('common/head') %>
       </div>
 
       <div class = "container">
 
-        <div class="nav">
-          <%- include('common/nav') %>
-        </div>             
+    
+          <div id="mySidebar" class="sidebar">
+            <button class="openbtn" onclick="ChkAllSelect()">☰</button>  
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <% if(typeof worksList !== "undefined") { %>
+              <%- worksList %>
+            <% } %>          
+          </div>
+            
 
        
-        <div id="content"> 
-          <div id="canvas">
-            <div class="content-nav">
-              <input type="button" id="plus" value="+" onclick="zoomInOut(0.1)">
-              <input type="button" id="minus" value="-" onclick="zoomInOut(-0.1)">
-              <input type="button" value="reset" onclick="reset()">
-              <input type="button" value="expand" onclick="expand()">
-              <input type="button" value="&larr;" onclick="moveLeft()">
-              <input type="button" value="&rarr;" onclick="moveRight()">
-              <input type="button" value="&uarr;" onclick="moveTop()">
-              <input type="button" value="&darr;" onclick="moveBottom()">
-            </div> 
-            <canvas></canvas>       
-          </div>
+        <div id="content">          
           <div id="data"> </div>
           <% if(typeof content === "undefined") {  }else{ %>
             <%- include(content) %>
@@ -42,4 +37,48 @@
       </div>     
 
     </body>
+
+    <script>
+
+      function ChkAllSelect(){  
+
+        var tog = document.getElementsByClassName("box");
+
+        var i;
+        
+        for (i = 0; i < tog.length; i++) {
+
+              tog[i].parentElement.querySelector(".nested").classList.toggle("active");
+              tog[i].classList.toggle("check-box");              
+        
+          }
+
+      }
+
+
+      function openNav() {
+          document.getElementById("mySidebar").style.width = "300px";
+          document.getElementById("content").style.marginLeft = "300px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidebar").style.width = "0";
+          document.getElementById("content").style.marginLeft= "0";
+        }
+
+
+        var toggler = document.getElementsByClassName("box");
+        var i;
+        
+        for (i = 0; i < toggler.length; i++) {
+          toggler[i].addEventListener("click", function() {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("check-box");
+          });
+        }
+
+
+    </script>
+
+         
 </html>
