@@ -4,8 +4,6 @@ const database = require('./database.js')
 const fs = require('fs')
 const multer  = require('multer')
 const path = require("path")
-const functions = require('./functions')
-const routes = require('./routes.js')
 const get = require('./get.js')
 const post = require('./post.js')
 
@@ -14,6 +12,22 @@ app.use('/public', express.static(__dirname + '/public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+var formatDate = function(date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear(),
+      hours = d.getHours(),
+      minutes = d.getMinutes(),
+      seconds = d.getSeconds();
+
+  if (month.length < 2)
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+ 
+  return [year,month,day,hours,minutes,seconds].join('-');
+};
 
 let storage = multer.diskStorage({
 
@@ -34,26 +48,21 @@ let storage = multer.diskStorage({
 
       let extension = path.extname(file.originalname);
         let basename = path.basename(file.originalname, extension);
-        cb(null, basename + "_" + functions.formatDate(Date.now()) + extension);
+        cb(null, basename + "_" + formatDate(Date.now()) + extension);
 
       }
     })
 
 let upload = multer({ storage: storage })
 
-routes(app)
-
 app.set('views', __dirname + '/views')
 
 app.get('/', get.index)
-app.all('/work/form', get.workForm )
-app.get('/work/canvas/:id', get.workCanvas)
-app.get('/work/view/:id', get.workView)
-app.post('/work/add', upload.single('addfile'), post.addWork)
-app.post('/work/update', upload.single('addfile'), post.updateWork)
-app.post('/work/delete', post.deleteWork)
-
-app.get(/files/, get.files)
+app.all('/works/form', get.works_form)
+app.get('/works/view/:id', get.works_view)
+app.post('/works/add', upload.single('addfile'), post.addWork)
+app.post('/works/update', upload.single('addfile'), post.updateWork)
+app.post('/works/delete', post.deleteWork)
 
 app.set('view engine', 'ejs')
 app.set('URL', 'http://localhost:3000')
@@ -64,19 +73,3 @@ app.listen(3000, (err)=>{
     database.init(app)    
 
 });
-
-
-
-// let ejs = require('ejs');
-// let myFileLoader = function (filePath) {
-//   return 'myFileLoader: ' + fs.readFileSync(filePath);
-// };
-
-// ejs.fileLoader = myFileLoad;
-
-// app.use('/',function(req,res,next){
-//   console.log('/ 주소의 요청일 때 실행된다.');
-//   next();
-// });
-
-//app.get('/test', function(req, res){  res.render('test');})

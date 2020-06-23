@@ -56,7 +56,7 @@ function getWorkView(id) {
       }
       
     };   
-    xhttp.open("GET", "/work/view/" + id , true);
+    xhttp.open("GET", "/works/view/" + id , true);
     xhttp.send();
 
 }  

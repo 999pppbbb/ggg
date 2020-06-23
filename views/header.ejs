@@ -1,8 +1,0 @@
-<% if(typeof urlpath === "undefined") {  }else{ %>
-    <%
-        for(var i=0; i < urlpath.urls.length; i++){
-          var ur = urlpath.urls[i];
-    %>
-     &nbsp;&nbsp;&nbsp;&nbsp;    <a href="<%=ur.url %>"><%=ur.name %></a>
-  
-  <%  } } %>

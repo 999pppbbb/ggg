@@ -2,27 +2,33 @@
 
 body { margin: 0; padding: 0;  text-align:center; }
 
-canvas { width:50%; margin:0 auto; text-align:center; background:#fff; border:1px solid #ccc; }
+canvas {   
+    width: 100%; margin:0; text-align:center; background:#fff; border:1px solid #ccc;
+    image-rendering: optimizeSpeed;             // Older versions of FF
+    image-rendering: -moz-crisp-edges;          // FF 6.0+
+    image-rendering: -webkit-optimize-contrast; // Webkit (non standard naming)
+    image-rendering: -o-crisp-edges;            // OS X & Windows Opera (12.02+)
+    image-rendering: crisp-edges;               // Possible future browsers.
+    -ms-interpolation-mode: nearest-neighbor;   // IE (non standard naming)
+ }
 svg { margin-left:auto; margin-right:auto; display:block;}
 
 table, th, tr, td { background-color: #fff; text-align: left; border-collapse: collapse;}
 th, td { border-bottom: 1px solid black;  }
 th {padding-right: 2em; }
 
-ul, #myUL { list-style-type: none; margin-bottom: 1em; }
-
 a { text-decoration: none; }
 a:link { color: black; }
 a:visited { color: black; }
 a:hover { background-color: black; color: #fff }
 
-.header {  
+.head {  
     padding: 10px;
     background-color: black;
     border: 1px solid black;
 }
 
-.header a { color: #fff; }
+.head a { color: #fff; }
 
 .container {
     margin: 0;
@@ -46,10 +52,15 @@ a:hover { background-color: black; color: #fff }
     z-index: 10;
 }
 
+.content-nav{
+    top: 3em;
+    position: fixed;
+}
+
 #content {
     width: 100%;
     height: 100%;
-    padding: 2em 0 2em 20em;  /* top right bottom left */ 
+    padding: 2em 0 0 20em;  /* top right bottom left */ 
     position: relative;
     background-color: #fff; 
     border: 1px solid black;
@@ -60,30 +71,6 @@ a:hover { background-color: black; color: #fff }
 
 #view { right: 10px; bottom: 10px; padding: 2em; border: 1px solid black;  background-color: #fff; position:fixed; }
 
-.caret {
-    cursor: pointer;
-    -webkit-user-select: none; /* Safari 3.1+ */
-    -moz-user-select: none; /* Firefox 2+ */
-    -ms-user-select: none; /* IE 10+ */
-    user-select: none;
-}
-
-.caret::before {
-    content: "\25B6";
-    color: black;
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.caret-down::before {
-    -ms-transform: rotate(90deg); /* IE 9 */
-    -webkit-transform: rotate(90deg); /* Safari */'
-    transform: rotate(90deg);  
-}
-
-.nested { display: none; }
-.nested .child { margin-right: -5em; line-height: 1.5em; }
-.active { display: block; }
 
 .btn-link {  
     float: left;
@@ -98,3 +85,43 @@ a:hover { background-color: black; color: #fff }
     font-family: inherit;    
     font-size: inherit;
 }
+
+
+/* tree-menu  */
+
+ul, #myUL {
+    list-style-type: none;
+  }
+  
+  #myUL {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .box {
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none;
+  }
+  
+  .box::before {
+    content: "\2610";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  
+  .check-box::before {
+    content: "\2611"; 
+    color:#000;
+  }
+  
+  .nested {
+    display: none;
+  }
+  
+  .active {
+    display: block;
+  }

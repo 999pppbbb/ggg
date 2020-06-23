@@ -8,25 +8,30 @@
   </head>  
     <body>
 
-      <div class="header">
-        <%- include('header') %>
+      <div class="head">
+        <%- include('common/head') %>
       </div>
 
       <div class = "container">
 
         <div class="nav">
-          <%- include('nav') %>
+          <%- include('common/nav') %>
         </div>             
 
+       
         <div id="content"> 
-          <div>
-            <input type="button" id="plus" value="+" onclick="zoomInOut(0.1)">
-            <input type="button" id="minus" value="-" onclick="zoomInOut(-0.1)">
-            <input type="button" value="fit" onclick="draw()">
-            <input type="button" value="expand" onclick="expand()">
-            <canvas>
-
-            </canvas>
+          <div id="canvas">
+            <div class="content-nav">
+              <input type="button" id="plus" value="+" onclick="zoomInOut(0.1)">
+              <input type="button" id="minus" value="-" onclick="zoomInOut(-0.1)">
+              <input type="button" value="reset" onclick="reset()">
+              <input type="button" value="expand" onclick="expand()">
+              <input type="button" value="&larr;" onclick="moveLeft()">
+              <input type="button" value="&rarr;" onclick="moveRight()">
+              <input type="button" value="&uarr;" onclick="moveTop()">
+              <input type="button" value="&darr;" onclick="moveBottom()">
+            </div> 
+            <canvas></canvas>       
           </div>
           <div id="data"> </div>
           <% if(typeof content === "undefined") {  }else{ %>
@@ -38,18 +43,3 @@
 
     </body>
 </html>
-
-<script>
-    var toggler = document.getElementsByClassName("caret");
-  var i;
-  
-  for (i = 0; i < toggler.length; i++) {
-
-    toggler[i].addEventListener("click", function() {
-      this.parentElement.querySelector(".nested").classList.toggle("active");
-      this.classList.toggle("caret-down");
-    });
-    
-  }
-
-</script>

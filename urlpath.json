@@ -1,8 +1,0 @@
-{
-  "urls":[
-  {"name":"works", "url":"/"},
-  {"name":"files", "url":"/files"},
-  {"name":"new", "url":"/work/form"},
-  {"name":"list", "url":"/work/list"}
-  ]
-}

@@ -19,6 +19,7 @@ function createSchema(app) {
 
   database.WorkSchema = mongoose.Schema ({
 
+    parentId:{ type: String, default: '0' },
     path:'string', 
     writer:'string', 
     title:'string', 
@@ -53,6 +54,10 @@ function createSchema(app) {
       this.find().sort({ path: 1}).exec(callback)
     },
 
+    _list: function(callback) {
+      this.find().exec(callback)
+    },
+
     load: function(id, callback) {
       this.findOne({_id: id}).exec(callback)
     },
@@ -63,7 +68,6 @@ function createSchema(app) {
 
       this.findByIdAndUpdate(id, workmodel, callback)
 
-      console.log('\n ****** WORK UPDATED ****** \n', this);
     },
 
     deleteWork: function(id, callback){
