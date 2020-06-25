@@ -72,7 +72,9 @@
 
             }
 
-      }
+            contentMarginLeft()
+
+         }
 
       }
 
@@ -97,6 +99,7 @@
 
               }
 
+              contentMarginLeft()
 
             } 
 
@@ -114,15 +117,14 @@
         
          if (currentDisplay == "block"){
           document.getElementById("sidebar").style.display = "none";
-          document.getElementById("content").style.marginLeft = "0"
+          document.getElementById("content").style.marginLeft = "0";
           
         } else {
           document.getElementById("sidebar").style.display = "block";       
 
         }
 
-          var currentWidth = compStyles.getPropertyValue('width');       
-          document.getElementById("content").style.marginLeft = currentWidth;
+          contentMarginLeft()
         
       }
 

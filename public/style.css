@@ -2,25 +2,6 @@
 
 body { margin: 0; padding: 0;  text-align:center; }
 
-#canvas {   
-    display: none;
-    width: 100%;
-    margin:0; text-align:center; background:#fff; border:1px solid #ccc;
-    image-rendering: optimizeSpeed;             // Older versions of FF
-    image-rendering: -moz-crisp-edges;          // FF 6.0+
-    image-rendering: -webkit-optimize-contrast; // Webkit (non standard naming)
-    image-rendering: -o-crisp-edges;            // OS X & Windows Opera (12.02+)
-    image-rendering: crisp-edges;               // Possible future browsers.
-    -ms-interpolation-mode: nearest-neighbor;   // IE (non standard naming)
- }
-
- #canvas-img {   width: auto;  }
-
- #canvas-nav{
-  top: 4em;
-  position: fixed;
-}
-
 svg { margin-left:auto; margin-right:auto; display:block;}
 
 table, th, tr, td { background-color: #fff; text-align: left; border-collapse: collapse;}
@@ -47,7 +28,6 @@ a:hover { background-color: black; color: #fff }
 }
 
 
-
 .btn {
   font-size: 12px;
   cursor: pointer;
@@ -61,8 +41,8 @@ a:hover { background-color: black; color: #fff }
 #content {
     width: 100%;
     height: 100%;
-    margin: 0;
-    position: relative;
+    margin: 0; padding: 0;
+    position: absolute;
     background-color: #fff; 
     border-bottom: 1px solid black;
     float: right;
@@ -71,6 +51,31 @@ a:hover { background-color: black; color: #fff }
 }
 
 #view { right: 10px; bottom: 10px; padding: 2em; border: 1px solid black;  background-color: #fff; position:fixed; }
+
+#form {
+  padding-left: 2em;
+}
+
+#canvas {   
+  display: none;
+  width: 100%;
+  margin:0; text-align:center; background:#fff; border:1px solid #ccc;
+  image-rendering: optimizeSpeed;             // Older versions of FF
+  image-rendering: -moz-crisp-edges;          // FF 6.0+
+  image-rendering: -webkit-optimize-contrast; // Webkit (non standard naming)
+  image-rendering: -o-crisp-edges;            // OS X & Windows Opera (12.02+)
+  image-rendering: crisp-edges;               // Possible future browsers.
+  -ms-interpolation-mode: nearest-neighbor;   // IE (non standard naming)
+}
+
+#canvas-img {   width: auto;  }
+
+#canvas-nav {
+  top: 4em;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+}
 
 
 .btn-link {  
