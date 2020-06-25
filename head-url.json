@@ -1,6 +1,5 @@
 {
   "urls":[
-  {"name":"works", "url":"/"},
-  {"name":"new", "url":"/works/form"}
+  {"name":"new work", "url":"/works/form"}
   ]
 }

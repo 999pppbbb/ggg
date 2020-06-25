@@ -55,6 +55,7 @@ let storage = multer.diskStorage({
 
 let upload = multer({ storage: storage })
 
+
 app.set('views', __dirname + '/views')
 
 app.get('/', get.index)
@@ -67,9 +68,11 @@ app.post('/works/delete', post.deleteWork)
 app.set('view engine', 'ejs')
 app.set('URL', 'http://localhost:3000')
 
+if(!fs.existsSync(__dirname + '/works')) fs.mkdirSync(__dirname + '/works');
+
 app.listen(3000, (err)=>{
-      if(err)throw err
-    console.log(' \n ************************ SERVER START ON PORT 3000 ************************ \n')
-    database.init(app)    
+  if(err)throw err
+  console.log(' \n ************************ SERVER START ON PORT 3000 ************************ \n')
+  database.init(app)    
 
 });
