@@ -1,0 +1,10 @@
+<div id = "sidebar">
+    <div id = "sidebar-nav">
+      <button class="btn" onclick="expandList()">expand</button>  
+      <button class="btn" onclick="resetList()">reset</button>  
+    </div>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <% if(typeof worksList !== "undefined") { %>
+      <%- worksList %>
+    <% } %>          
+  </div>

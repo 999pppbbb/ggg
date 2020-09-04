@@ -2,57 +2,84 @@
 <html>
 	<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
-    <link rel="stylesheet" href="http://localhost:3000/public/style.css">
-    <script src= "http://localhost:3000/public/scripts.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://localhost:3000/public/style.css">   
+    <!-- <script data-main="require-main" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.16/require.js"></script> -->
+   
   </head>  
-  
     <body>
 
       <div class="head">
         <button class="btn" onclick="openSidebar()">☰</button>  
         <%- include('common/head') %>
       </div>
+      
+      <%- include('common/sidebar') %>
 
-      <div class = "container">
-    
-        <div id = "sidebar">
-          <div id = "sidebar-nav">
-            <button class="btn" onclick="expandList()">expand</button>  
-            <button class="btn" onclick="resetList()">reset</button>  
-          </div>
-          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-          <% if(typeof worksList !== "undefined") { %>
-            <%- worksList %>
-          <% } %>          
-        </div>
-       
-        <div id="content">       
-            <div id="canvas">
-            <div id="canvas-nav">
-              <input type="button" class="btn" id="plus" value="+" onclick="zoomInOut(0.1)">
-              <input type="button" class="btn" id="minus" value="-" onclick="zoomInOut(-0.1)">
-              <input type="button" class="btn" value="reset" onclick="reset()">
-              <input type="button" class="btn" value="expand" onclick="expand()">
-              <input type="button" class="btn" value="&larr;" onclick="moveLeft()">
-              <input type="button" class="btn" value="&rarr;" onclick="moveRight()">
-              <input type="button" class="btn" value="&uarr;" onclick="moveTop()">
-              <input type="button" class="btn" value="&darr;" onclick="moveBottom()">
-            </div> 
-            <canvas id="canvas-img"></canvas>   
-          </div>    
-     
-          <div id="data"> </div>
-          <% if(typeof content === "undefined") {  }else{ %>
-            <%- include(content) %>
-          <% } %>
+      <div class = "container">          
+        
+        <div id="data"></div>   
+
+        <div class="content"> 
+
+          <object id="mainView" type="image/svg+xml" data="/public/asset/tiger1.svg" onload="requireSvgPanZoom()"></object>
+                     
+          <% if(typeof content === "undefined") {  }else{ %>   <%- include(content) %>   <% } %>
         </div>  
 
-      </div>     
+      </div>    
 
+      <script src= "http://localhost:3000/public/scripts.js"></script>
+      <script href= "http://localhost:3000/public/dist/svgpan.js"></script>
     </body>
-
     <script>
+      function requireSvgPanZoom() {
+        var root = document.querySelector('object').getSVGDocument();
+        setupHandlers(root);
+      
+//   require.config({
+//   paths: {
+//     'svg-pan-zoom': '../public/dist/svg-pan-zoom'
+//   }
+// })
+
+// require(["svg-pan-zoom"], function(svgPanZoom) {
+//   svgPanZoom('#mainView', {
+//     zoomEnabled: true,
+//     controlIconsEnabled: true,
+//     maxzoom: 1000
+//   });
+// });
+
+ }
+
+document.getElementById("mainView").addEventListener("mouseenter", function(){
+  //console.log("mouseenter")
+})
+
+// let vb = document.createElement('div');
+
+// vb.style.left = 0;
+// vb.style.top = 0;
+// vb.style.width = '300px';
+// vb.style.height = '300px';
+// vb.style.border = '1px solid red';
+// vb.style.position = 'absolute';
+// vb.style.zIndex = 99999999999;
+
+//   document.body.appendChild(vb);
+
+//   document.addEventListener('mousemove', (e) => {
+//     let halfWidth = parseInt(vb.style.width) / 2;
+//     let halfHeight = parseInt(vb.style.height) / 2;
+
+//     let centerX = e.clientX - halfWidth;
+//     let centerY = e.clientY - halfHeight;
+
+//     vb.style.left = centerX + "px";
+//     vb.style.top = centerY + "px";
+//   });
 
       function expandList() {  
 
@@ -71,8 +98,6 @@
                 } 
 
             }
-
-            contentMarginLeft()
 
          }
 
@@ -99,7 +124,6 @@
 
               }
 
-              contentMarginLeft()
 
             } 
 
@@ -112,27 +136,27 @@
         let para = document.querySelector('#sidebar');
         let compStyles = window.getComputedStyle(para);
         var currentDisplay = compStyles.getPropertyValue('display');        
-        var marginLeft = document.getElementById("content").style.marginLeft;
-
         
          if (currentDisplay == "block"){
           document.getElementById("sidebar").style.display = "none";
-          document.getElementById("content").style.marginLeft = "0";
+          document.getElementById("content").style.paddingLeft = "0";
           
         } else {
-          document.getElementById("sidebar").style.display = "block";       
-
+          document.getElementById("sidebar").style.display = "block";   
+        
         }
 
-          contentMarginLeft()
         
       }
 
         function closeNav() {
           document.getElementById("sidebar").style.display = "none";
-          document.getElementById("content").style.marginLeft= "0";
+          document.getElementById("content").style.paddingLeft= "0";
+          
         }
 
+
+     
 
         var toggler = document.getElementsByClassName("box");
         var i;
@@ -141,18 +165,9 @@
           toggler[i].addEventListener("click", function() {
             this.parentElement.querySelector(".nested").classList.toggle("active");
             this.classList.toggle("check-box");
-            contentMarginLeft()
+           
           });
         }
-
-        function contentMarginLeft() {
-
-        let para = document.querySelector('#sidebar');
-        let compStyles = window.getComputedStyle(para);
-        var currentWidth = compStyles.getPropertyValue('width');       
-          document.getElementById("content").style.marginLeft = currentWidth;
-
-      }
 
 
     </script>

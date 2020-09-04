@@ -32,25 +32,25 @@ module.exports = {
             var parentId = '';
             listFunc.getAllList(req).then( (worksList) => {
                 if(req.body.parentId) parentId = req.body.parentId;
-                 res.render('index', { content: 'works/form' , parentId: parentId, worksList: worksList, urlpath:urlpath })
+                 res.render('works/form', { parentId: parentId, worksList: worksList, urlpath:urlpath })
             });
         }
     },
     works_view: (req, res) => {        console.log(' \n ---------- GET WORK VIEW PAGE ---------- \n ');
-
-        var database = req.app.get('database');        
-        database.WorkModel.load(req.params.id, function(err, result) {
-            if (err) throw err;
-    
-            if(!result.file || typeof result.file === 'undefined') {
-
+    var database = req.app.get('database');        
+    database.WorkModel.load(req.params.id, function(err, result) {
+        if (err) throw err;
+        
+        if(!result.file || typeof result.file === 'undefined') {
+            
                 result.filepath = '';
-
-             } else {
-
-                 result.filepath = '/works/' + result.path + '/' + result.file.filename;
-
-             }          
+                
+            } else {
+                
+                result.filepath = '/works/' + result.path + '/' + result.file.filename;
+                
+            }          
+            console.log('view>>>>',req.params.id);
              res.render('works/view', { result: result })       
 
         })
